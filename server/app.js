@@ -46,12 +46,6 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
 // Directorio raíz de la aplicación
-const clientPath = path.join(__dirname, 'client');
-
-console.log('Ruta absoluta del directorio client:', clientPath);
-
-app.use(express.static(clientPath));
-
 app.get('/', (req, res) => {
   const initialFilePath = path.join(__dirname, 'client', 'astrea', 'src', 'components', 'Chatbot.jsx');
   console.log('Ruta absoluta del archivo Chatbot.jsx:', initialFilePath);
@@ -70,6 +64,7 @@ app.get('/', (req, res) => {
     }
   });
 });
+
 
 
 // Ruta para manejar la solicitud del formulario de contacto
