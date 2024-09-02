@@ -47,7 +47,8 @@ app.use(bodyParser.urlencoded({ extended: true }));
 
 app.get('/', (req, res) => {
   // Subir un nivel desde el directorio actual (server) para llegar al directorio client
-  const initialFilePath = path.join(__dirname, '..', 'client', 'astrea', 'src', 'components', 'Chatbot.jsx');
+ const initialFilePath = path.join(__dirname, '..', '..', 'client', 'astrea', 'src', 'components', 'Chatbot.jsx');
+
   console.log('Ruta absoluta del archivo Chatbot.jsx:', initialFilePath);
 
   fs.access(initialFilePath, fs.constants.F_OK, (err) => {
