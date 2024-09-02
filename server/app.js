@@ -45,17 +45,23 @@ app.use(morgan('dev'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
-app.get('/', (req, res) => {
-  // Subir un nivel desde el directorio actual (server) para llegar al directorio client
- const initialFilePath = path.join(__dirname, '..', '..', 'client', 'astrea', 'src', 'Components', 'Chatbot.jsx');
+// Configurar express.static para servir archivos estáticos
+app.use(express.static(path.join(__dirname, 'client', 'astrea', 'public')));
 
+// Ruta para manejar la solicitud del archivo específico
+app.get('/', (req, res) => {
+  // Definir la ruta del archivo específico
+  const initialFilePath = path.join(__dirname, 'client', 'astrea', 'src', 'Components', 'Chatbot.jsx');
+  
   console.log('Ruta absoluta del archivo Chatbot.jsx:', initialFilePath);
 
+  // Verificar si el archivo existe
   fs.access(initialFilePath, fs.constants.F_OK, (err) => {
     if (err) {
       console.error('Error al encontrar el archivo:', err);
       res.status(404).send('Archivo no encontrado');
     } else {
+      // Enviar el archivo si existe
       res.sendFile(initialFilePath, (err) => {
         if (err) {
           console.error('Error al enviar el archivo:', err);
@@ -65,7 +71,6 @@ app.get('/', (req, res) => {
     }
   });
 });
-
 
 
 
