@@ -53,15 +53,15 @@ console.log('Ruta absoluta del directorio client:', clientPath);
 app.use(express.static(clientPath));
 
 app.get('/', (req, res) => {
-  const landingFilePath = path.join(clientPath, 'landing.html');
-  console.log('Ruta absoluta del archivo landing.html:', landingFilePath);
+  const initialFilePath = path.join(__dirname, 'client', 'astrea', 'src', 'components', 'Chatbot.jsx');
+  console.log('Ruta absoluta del archivo Chatbot.jsx:', initialFilePath);
 
-  fs.access(landingFilePath, fs.constants.F_OK, (err) => {
+  fs.access(initialFilePath, fs.constants.F_OK, (err) => {
     if (err) {
       console.error('Error al encontrar el archivo:', err);
       res.status(404).send('Archivo no encontrado');
     } else {
-      res.sendFile(landingFilePath, (err) => {
+      res.sendFile(initialFilePath, (err) => {
         if (err) {
           console.error('Error al enviar el archivo:', err);
           res.status(500).send('Error al enviar el archivo');
@@ -70,6 +70,7 @@ app.get('/', (req, res) => {
     }
   });
 });
+
 
 // Ruta para manejar la solicitud del formulario de contacto
 app.post('/sendContactForm', async (req, res) => {
