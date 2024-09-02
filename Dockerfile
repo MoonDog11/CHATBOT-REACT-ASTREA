@@ -12,7 +12,7 @@ COPY server/package.json server/package-lock.json* server/npm-shrinkwrap.json* .
 # Instalar dependencias
 RUN npm install --production --silent
 
-# Mostrar los archivos copiados para verificar
+# Mostrar los archivos en el directorio de trabajo después de copiar las dependencias
 RUN echo "Archivos en el directorio de trabajo después de copiar las dependencias:" && ls -la /app
 
 # Copiar el resto del código fuente al directorio de trabajo
