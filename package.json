@@ -1,0 +1,23 @@
+{
+  "name": "my-app",
+  "version": "1.0.0",
+  "description": "Aplicación con servidor en subdirectorio",
+  "main": "server/app.js",
+  "scripts": {
+    "start": "node server/app.js"
+  },
+  "dependencies": {
+    "jsonwebtoken": "^8.5.1",
+    "express": "^4.18.2",
+    "body-parser": "^1.20.2",
+    "cors": "^2.8.5",
+    "morgan": "^1.10.0",
+    "helmet": "^6.0.0",
+    "multer": "^1.4.5-lts.1",
+    "form-data": "^4.0.0",
+    "node-fetch": "^3.3.0",
+    "bcryptjs": "^2.4.3",
+    "pg": "^8.7.1",
+    "dotenv": "^10.0.0"
+  }
+}

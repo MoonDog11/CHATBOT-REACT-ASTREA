@@ -1,0 +1,12 @@
+version: 1
+services:
+  web:
+    image: node:14
+    buildScript: npm install
+    startScript: npm start
+    env:
+      NODE_ENV: production
+  database:
+    image: postgres:16
+    ports:
+      - 5432
