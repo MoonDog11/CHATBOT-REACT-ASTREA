@@ -27,7 +27,7 @@
     "build": "vite build",
     "preview": "vite preview",
     "lint": "eslint src --ext js,jsx --report-unused-disable-directives --max-warnings 0",
-    "test": "echo \"No test specified\" && exit 1" // Modifica o elimina este script si usas una herramienta de pruebas diferente
+    "test": "react-scripts test"
   },
   "eslintConfig": {
     "extends": [
