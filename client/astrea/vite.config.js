@@ -1,14 +1,12 @@
 import { defineConfig } from 'vite';
+import react from '@vitejs/plugin-react';
 
 export default defineConfig({
+  plugins: [react()],
   server: {
-    proxy: {
-      '/api': {
-        target: 'https://pif1-production.up.railway.app/drivers', // Cambia esto por la URL de tu backend en Railway
-        changeOrigin: true,
-        secure: false,
-        rewrite: (path) => path.replace(/^\/api/, '') // Elimina el prefijo /api de las solicitudes
-      }
-    }
-  }
+    port: 3000, // Asegúrate de que este puerto no esté en uso
+  },
+  build: {
+    outDir: 'build', // Asegúrate de que este directorio esté bien configurado
+  },
 });
