@@ -1,27 +1,38 @@
-#!/bin/bash
+# Etapa de construcción
+FROM node:lts-alpine AS build
 
-# Imprimir un mensaje indicando el inicio de la inicialización
-echo "Starting initialization..."
+# Configurar el entorno en modo producción
+ENV NODE_ENV=production
 
-# Ejecutar migraciones de base de datos si existe el archivo /migrate.sh
-echo "Running database migrations..."
-if [ -f /migrate.sh ]; then
-    chmod +x /migrate.sh  # Asegurar que migrate.sh tenga permisos de ejecución
-    /migrate.sh
-else
-    echo "Migration script not found!"
-fi
+# Crear y establecer el directorio de trabajo
+WORKDIR /app
 
-# Cambiar al directorio /app/server para iniciar la aplicación Node.js
-cd /server || exit
+# Copiar archivos de dependencias del cliente
+COPY client/astrea/package.json client/astrea/package-lock.json* ./
 
-# Iniciar la aplicación Node.js (app.js) desde el directorio /app/server
-echo "Starting the application..."
-if [ -f app.js ]; then
-    node app.js
-else
-    echo "Application entry point not found!"
-fi
+# Instalar dependencias
+RUN npm install --silent
 
-# Imprimir un mensaje indicando la finalización de la inicialización
-echo "Initialization complete."
+# Copiar el resto del código fuente del cliente al directorio de trabajo
+COPY client/astrea/ ./
+
+# Mostrar los archivos en el directorio de trabajo antes de construir
+RUN echo "Archivos en el directorio de trabajo antes de construir:" && ls -la /app
+
+# Construir la aplicación React
+RUN npm run build
+
+# Etapa de producción
+FROM nginx:alpine
+
+# Copiar los archivos construidos al contenedor Nginx
+COPY --from=build /app/build /usr/share/nginx/html
+
+# Mostrar los archivos en el directorio de Nginx antes de iniciar el servidor
+RUN echo "Archivos en el directorio de Nginx:" && ls -la /usr/share/nginx/html
+
+# Exponer el puerto en el que Nginx escuchará
+EXPOSE 80
+
+# Comando por defecto para Nginx
+CMD ["nginx", "-g", "daemon off;"]
