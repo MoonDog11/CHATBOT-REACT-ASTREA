@@ -1,15 +1,15 @@
 import React from 'react';
-import ReactDOM from 'react-dom/client'; // Correct import for React 18+
+import ReactDOM from 'react-dom/client';
 import { Provider } from 'react-redux';
-import { createStore } from 'redux'; // Ensure createStore is imported from 'redux'
-import rootReducer from './Redux/Reducer'; // Ensure the path is correct
+import { createStore } from 'redux';
+import rootReducer from './Redux/Reducer';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
 
-// Create the Redux store
+// Crea el store de Redux
 const store = createStore(rootReducer);
 
-// Create the root element and render the app
+// Crea el elemento raíz y renderiza la aplicación
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <React.StrictMode>
@@ -19,5 +19,5 @@ root.render(
   </React.StrictMode>
 );
 
-// Report web vitals (optional)
+// Reporta las métricas web (opcional)
 reportWebVitals();
