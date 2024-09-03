@@ -1,4 +1,5 @@
-FROM node:lts-alpine
+# Etapa de construcción
+FROM node:lts-alpine AS build
 
 # Configurar el entorno en modo producción
 ENV NODE_ENV=production
@@ -6,23 +7,26 @@ ENV NODE_ENV=production
 # Crear y establecer el directorio de trabajo
 WORKDIR /app
 
-# Copiar archivos de dependencias
-COPY server/package.json server/package-lock.json* server/npm-shrinkwrap.json* ./
+# Copiar archivos de dependencias del cliente
+COPY client/package.json client/package-lock.json* client/npm-shrinkwrap.json* ./
 
 # Instalar dependencias
-RUN npm install --production --silent
+RUN npm install --silent
 
-# Mostrar los archivos en el directorio de trabajo después de copiar las dependencias
-RUN echo "Archivos en el directorio de trabajo después de copiar las dependencias:" && ls -la /app
+# Copiar el resto del código fuente del cliente al directorio de trabajo
+COPY client/ ./
 
-# Copiar el resto del código fuente al directorio de trabajo
-COPY . .
+# Construir la aplicación React
+RUN npm run build
 
-# Mostrar todos los archivos en el directorio de trabajo después de copiar el código fuente
-RUN echo "Archivos en el directorio de trabajo después de copiar el código fuente:" && ls -la /app
+# Etapa de producción
+FROM nginx:alpine
 
-# Exponer el puerto en el que la aplicación escuchará
-EXPOSE 3001
+# Copiar los archivos construidos al contenedor Nginx
+COPY --from=build /app/build /usr/share/nginx/html
 
-# Comando para iniciar la aplicación
-CMD ["npm", "start"]
+# Exponer el puerto en el que Nginx escuchará
+EXPOSE 80
+
+# Comando por defecto para Nginx
+CMD ["nginx", "-g", "daemon off;"]
