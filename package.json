@@ -5,6 +5,9 @@
   "main": "server/app.js",
   "scripts": {
     "start": "node server/app.js"
+    "dev": "vite",         // Para iniciar el servidor de desarrollo
+    "build": "vite build", // Para construir la aplicación
+    "preview": "vite preview" 
   },
   "dependencies": {
     "jsonwebtoken": "^8.5.1",
