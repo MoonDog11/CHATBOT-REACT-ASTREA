@@ -1,10 +1,7 @@
 # Etapa de construcción
 FROM node:lts-alpine AS build
 
-# Configurar el entorno en modo producción
-ENV NODE_ENV=production
-
-# Crear y establecer el directorio de trabajo
+# Configurar el entorno
 WORKDIR /app
 
 # Copiar archivos de dependencias del cliente
