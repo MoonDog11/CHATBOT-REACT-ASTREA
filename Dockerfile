@@ -8,13 +8,13 @@ ENV NODE_ENV=production
 WORKDIR /app
 
 # Copiar archivos de dependencias del cliente
-COPY client/package.json client/package-lock.json* client/npm-shrinkwrap.json* ./
+COPY client/astrea/package.json client/astrea/package-lock.json* ./
 
 # Instalar dependencias
 RUN npm install --silent
 
 # Copiar el resto del código fuente del cliente al directorio de trabajo
-COPY client/ ./
+COPY client/astrea/ ./
 
 # Construir la aplicación React
 RUN npm run build
