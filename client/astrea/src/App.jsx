@@ -1,6 +1,7 @@
 import React from 'react';
 import { BrowserRouter,Routes, Route } from 'react-router-dom';
-import ChatBot from './Comopents/ChatBot'; 
+import ChatBot from './Components/ChatBot';
+
 
 import { Provider } from 'react-redux';
 import store from "./Redux/Store";
